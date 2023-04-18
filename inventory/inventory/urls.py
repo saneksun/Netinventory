@@ -25,9 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('', include('netinventory.urls')),
-
-    # TODO add 403.html
-    #  edit 500.html page - get all info
          ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 handler500 = netinventory_views.server_error
