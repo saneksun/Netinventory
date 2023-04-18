@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+{% block content %}
+<div class="p-2 .bg-white" style="width: 100%; margin-left:10px;">
+<pre><br>
+   NetInventory is a tool that is scanning network devices in order to collect hardware inventory information using standard SNMP (v1, v2c) and NETCONF (SSH port 830) protocols.
+ SNMP is using sysDescr (OID: 1.3.6.1.2.1.1.1) that supports by the most of network platforms vendors.
+
+ <h4>User permissions</h4>
+   The following permissions are available in NetInventory and can be used via Admin panel (for superuser):
+      Can add nodes
+      Can change nodes
+      Can delete nodes
+
+ <h4>Configuration</h4>
+ <h4>Juniper Network</h4>
+ <b>Note!</b> For Juniper Network devices - do not use 'set snmp description' as it is overwrite built-in sysDescr information.
+
+ Configuration:
+<div class="p-2 bg-light border" style="width: 70%; margin-left:15px;">
+  # Configure netconf
+    set system services netconf ssh port 830
+  # Add NetInventory IP to SNMP ACL
+    set snmp client-list SNMP.ACL NETINV_IP/32
+    set snmp community NAME.RO.SNMP client-list-name SNMP.ACL
+  # set snmp location information that will be used to get site information. Pattern: <i>'City, Site address, Additional info that won't be used in NetInventory'</i>
+    set snmp location 'London, Buckingham Palace'
+  # Create a user for NetInventory
+    set system login user netinv uid 2030
+    set system login user netinv class read-only
+    set system login user netinv authentication plain-text-password  - then, enter password in cli
+  # Set addition limitations for the user (optional)
+    set system login class NETINV allow-commands "(.*need-trailer)|(.*netconf)|(.*xml-mode)"
+</div>
+
+ <h4>Cisco Systems (IOS-XR)</h4>
+ Configuration:
+<div class="p-2 bg-light border" style="width: 70%; margin-left:10px;">
+  # Configure netconf
+    netconf agent tty
+    ssh client source-interface MgmtEth0/RP0/CPU0/0
+    ssh server v2
+    ssh server vrf default
+    ssh server netconf vrf default
+    netconf agent tty
+    netconf-yang agent ssh
+  # SNMP configuration
+    snmp-server community NAME.RO.SNMP RO
+    snmp-server location London, Buckingham Palace
+
+  #  Verification:
+    #sh tcp brief | include 830
+    0x00007f7578005dd8 0x60000000      0      0  :::830                 :::0                   LISTEN
+    0x00007f7574028768 0x00000000      0      0  :::830                 :::0                   LISTEN
+    0x00007f75d0012728 0x60000000      0      0  X.X.X.X:830            Y.Y.Y.Y:62082          ESTAB
+    0x00007f75b00283a8 0x60000000      0      0  0.0.0.0:830            0.0.0.0:0              LISTEN
+    0x00007f75780009e8 0x00000000      0      0  0.0.0.0:830            0.0.0.0:0              LISTEN
+
+</div>
+</pre>
+</div>
+
+{% endblock content %}
+{% block statistics %}
+{% endblock statistics %}
+</body>
+</html>

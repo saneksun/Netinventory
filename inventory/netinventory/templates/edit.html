@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+{% block content %}
+<div style="margin-left:10px;">
+<p>&nbsp;<h4>Edit parameters for host <i>{% for hostname in hostname.all %}{{ hostname.hostname }}{% endfor %}</h4></i><br>
+    &nbsp;Current settings:<br>
+    <div class="p-2 bg-light border" style="width: 25%; margin-left:15px;">
+    {% for summ in summ.all %}
+    <i><table>
+        <tr>
+    <td width="200px">&nbsp;Host IP:</td> <td> {{ summ.ip }} </td>
+             </tr>
+        <tr>
+    <td width="200px">&nbsp;username: </td> <td> {{ summ.username }}</td>
+         </tr>
+            <tr>
+    <td width="200px">&nbsp;snmp community:</td> <td> {{ summ.snmpcommunity }}</td>
+        {% endfor %}
+      </tr>
+          </table>
+        </i>
+    </div>
+</p>
+&nbsp;Enter new settings:
+<form method="post">
+    <br>
+    {% csrf_token %}
+<table>
+        <tr><td>Node IP:</td><td> {{ form.ip }}</td></tr>
+        <tr><td>Username:</td><td> {{ form.username }}</td></tr>
+        <tr><td>Password:</td><td> {{ form.passwd }}</td></tr>
+        <tr><td>SNMP community:</td><td> {{ form.snmpcommunity }}</td></tr>
+    </table>    <br>
+    <table>
+        <tr><td>
+   &nbsp; <button type="submit" name="edit" class="btn btn-secondary">Edit</button>
+</form>
+        </td>
+        <td>
+           <form action="{% url 'nodes' %}">
+            <input type="submit" value="Back" class="btn btn-secondary">
+           </form>
+        </td>
+        </tr>
+    </table>
+<br>
+{% for msg in msg %}
+&nbsp;<i>{{ msg }}</i><br>
+{% endfor %}
+<hr>
+</div>
+{% endblock content %}
+{% block statistics %}
+{% endblock statistics %}
+</body>
+</html>
+

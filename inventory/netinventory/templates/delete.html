@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+<html lang="en">
+<body>
+{% block content %}
+<br><br>
+<p>Are you sure you want to delete host with IP: {{ ip }}?</p>
+<br>
+     {{ msg }}
+    <br>
+    <table>
+        <tr>
+            <td>
+                <form method="post">
+                      {% csrf_token %}
+                   &nbsp; <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+            <td>
+                <form action="{% url 'nodes' %}">
+                <input type="submit" value="Back" class="btn btn-secondary">
+                    </form>
+            </td>
+        </tr>
+    </table>
+
+{% endblock content %}
+</body>
+</html>

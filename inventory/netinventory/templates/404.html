@@ -1,0 +1,14 @@
+{% extends 'base/40x.html' %}
+{% block title %}Page Not Found{% endblock %}
+{% block message %}
+ <br>
+   <h1> Error 404 </h1>
+ <br>
+   <h4> The requested page does not exist.</h4>
+ <br>
+   <table cellspacing="0" cellpadding="0" width=100%>
+        <tr><td>
+          <a href="{% url 'home' %}" class="btn btn-secondary">Home Page</a>
+       </td></tr>
+   </table>
+{% endblock %}

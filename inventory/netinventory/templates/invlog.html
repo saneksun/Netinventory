@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+{% block content %}
+<h2><center>Inventory log<center></h2>
+<div style="margin-left:10px;">
+<form method="post">
+    <br>
+    Search by parameters: <br>
+    {% csrf_token %}
+    <table>
+        <tr><td>Node IP:</td><td> {{ form.ip }}</td></tr>
+        <tr><td>Hostname:</td><td> {{ form.hostname }}</td></tr>
+        <tr><td>HW name:</td><td> {{ form.name }}</td></tr>
+        <tr><td>Serial_number:</td><td> {{ form.serial_number }}</td></tr>
+        <tr><td>Site:</td><td> {{ form.site }}</td></tr>
+    </table>
+    <br>
+    <table cellspacing="0" cellpadding="0" width=100%>
+        <tr><td>
+   &nbsp; <button type="submit" name="search" class="btn btn-secondary">Search</button>
+        </td>
+     <td align="right"><button type="submit" name="download" class="btn btn-secondary">Download csv</button>&nbsp;</td>
+
+        </tr>
+    </table>
+</form>
+<hr>
+</div>
+{% endblock content %}
+
+{% block statistics %}
+<div style="overflow-y: scroll; height:800px;">
+    <table class="table table-sm">
+    <tr>
+        <th>Time</th>
+        <th>Node IP</th>
+        <th>Node hostname</th>
+        <th>HW model</th>
+        <th>HW serial number</th>
+        <th>Site</th>
+        <th>Description</th>
+
+    </tr>
+        {% for summ in summ_log.all %}
+    <tr>
+    <td>{{ summ.timestamp }}</td>
+    <td>{{ summ.ip }}</td>
+    <td>{{ summ.hostname }}</td>
+    <td>{{ summ.name }}</td>
+    <td>{{ summ.serial_number }}</td>
+    <td>{{ summ.site }}</td>
+    <td>{{ summ.log_description }}</td>
+    </tr>
+        {% endfor %}
+    </table>
+
+{% endblock statistics %}
+</body>
+</html>

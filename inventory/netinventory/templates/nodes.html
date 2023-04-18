@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+{% block content %}
+<div style="margin-left:10px;">
+<form method="post">
+    <br>
+    {% if perms.netinventory.add_nodes %}
+    New node settings: <br>
+    {% csrf_token %}
+    <table>
+        <tr><td>Node IP:</td><td> {{ form.ip }}</td></tr>
+        <tr><td>Username:</td><td> {{ form.username }}</td></tr>
+        <tr><td>Password:</td><td> {{ form.passwd }}</td></tr>
+        <tr><td>SNMP community:</td><td> {{ form.snmpcommunity }}</td></tr>
+    </table>
+    <br>
+    <table cellspacing="0" cellpadding="0" width=100%>
+        <tr><td>
+   &nbsp; <button type="submit" name="add" class="btn btn-secondary">Add node</button>
+        </td>
+        </tr>
+    </table>
+    {% endif %}
+{% for msg in msg %}
+&nbsp;<i>{{ msg }}</i><br>
+{% endfor %}
+</form>
+<hr>
+</div>
+{% endblock content %}
+{% block statistics %}
+<div style="width:100%; margin-left:10px">
+    <table class="table table-hover">
+    <tr>
+        <th width=300px>IP</th>
+        <th width=300px>Last scan</th>
+        <th width=300px> </th>
+        <th> </th>
+    </tr>
+        {% for s in scan|dictsort:"ip" %}
+    <tr>
+    <td>{{ s.ip }}</td>
+    <td><i>{{ s.lastscan }}</i></td>
+    <td>
+       <form>
+            <a href="{% url 'test' s.id %}">Test</a> |
+            <a href="{% url 'scan' s.id %}">Scan</a>
+           {% if perms.netinventory.change_nodes %}
+           |  <a href="{% url 'edit' s.id %}">Edit</a>
+           {% endif %}
+           {% if perms.netinventory.delete_nodes %}
+            | <a href="{% url 'delete' s.id %}">Delete</a>
+           {% endif %}
+       </form>
+     </td>
+        <td>
+            <i>{{ s.tresult|join:" / " }}</i>
+        </td>
+
+     </tr>
+        {% endfor %}
+    </table>
+</div>
+       {% endblock statistics %}
+</body>

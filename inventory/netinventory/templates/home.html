@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+{% block content %}
+<div style="margin-left:10px;">
+<form method="post">
+    {% csrf_token %}
+    <br>
+<table>
+    <tr>
+        <td width="600px">
+    <table>
+     <tr><td><b>Search by filter:</b></td></tr>
+       <tr><td width="200px">Hostname:</td><td width="300px">{{ form.hostname }}</td></tr>
+        <tr><td width="200px">IP:</td><td width="300px">{{ form.ip }}</td></tr>
+       <tr><td width="200px">Site:</td><td width="300px">{{ form.site }}</td></tr>
+       <tr><td width="200px">HW model:</td><td width="300px">{{ form.description }}</td></tr>
+       <tr><td width="200px">Serial number:</td><td width="300px">{{ form.serial_number }}</td></tr>
+       <tr><td width="200px">Vendor:</td><td width="300px">{{ form.vendor }}</td></tr>
+        </td>
+    </table>
+    <td style="vertical-align:top">
+        <table>
+            <tr><td><b>Total count:</b></td><td><b>{{ tcount }}</b></td></tr>
+            {% for num in count %}
+            <tr><td>{{ num.description }}:</td><td><a href="{% url 'module_filter' num.description %}">{{ num.total }}</a></td></tr>
+            {% endfor %}
+        <td>
+            </table>
+    </tr>
+</table>
+    <br>
+    <table cellspacing="0" cellpadding="0" width=100%>
+        <tr><td width=100px>
+   &nbsp; <button type="submit" name="search" class="btn btn-secondary">Search</button>
+        </td>
+            <td width=150px>
+   &nbsp; <button type="submit" name="runscan" class="btn btn-secondary">Run new scan</button>
+        </td>
+        <td align="right"><button type="submit" name="download" class="btn btn-secondary">Download csv</button>&nbsp;</td>
+        </tr></table>
+    {{ result|join:" / "  }}
+   </form>
+<hr>
+    </div>
+{% endblock content %}
+
+{% block statistics %}
+<div style="overflow-y: scroll; height:800px;">
+    <table class="table table-striped">
+    <tr>
+         <th>Hostname</th>
+         <th>IP</th>
+         <th>Vendor</th>
+         <th>Hardware</th>
+         <th>Serial number</th>
+         <th>Part number</th>
+         <th>Site</th>
+         <th>Last update</th>
+    </tr>
+        {% for summ in summ.all reversed %}
+    <tr>
+    <td>{{ summ.hostname }}</td>
+    <td>{{ summ.ip }}</td>
+    <td>{{ summ.vendor }}</td>
+    <td>{{ summ.description }}</td>
+    <td>{{ summ.serial_number }}</td>
+    <td>{{ summ.part_number }}</td>
+    <td>{{ summ.site }}</td>
+    <td>{{ summ.timestamp }}</td>
+    </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock statistics %}
+</body>
+</html>

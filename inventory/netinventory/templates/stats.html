@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+<html lang="en">
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
+</head>
+<body>
+{% block content %}
+{% endblock content %}
+
+{% block statistics %}
+<!-- charts canvas elements -->
+<div class="chartBox" style="width:40%">
+     <canvas id="pie-chart1" ></canvas>
+</div>
+<div class="chartBox" style="width:40%">
+     <canvas id="pie-chart2" ></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<script>
+// chart #1
+    var config = {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          label: 'Modules',
+          data: {{ data|safe }},
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(75, 192, 192)',
+            'rgb(255, 205, 86)',
+            'rgb(201, 203, 207)',
+            'rgb(54, 162, 235)'
+            ],
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: "Hardware"
+        }
+      }
+    };
+//draw chart1
+   var ctx1 = document.getElementById('pie-chart1').getContext('2d');
+   new Chart(ctx1, config);
+
+// chart #2
+    var config2 = {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: {{ vendorcount|safe }},
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(75, 192, 192)',
+            'rgb(255, 205, 86)',
+            'rgb(201, 203, 207)',
+            'rgb(54, 162, 235)'
+            ],
+        }],
+        labels: {{ vendor|safe }}
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: "Vendors"
+        }
+      }
+    };
+//draw chart
+      var ctx2 = document.getElementById('pie-chart2').getContext('2d');
+      new Chart(ctx2, config2);
+
+</script>
+{% endblock statistics %}
+</body>
+</html>

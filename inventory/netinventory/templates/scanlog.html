@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+{% block content %}
+<h2><center>Scanning logs<center></h2>
+<hr>
+{% endblock content %}
+
+{% block statistics %}
+<div style="overflow-y: scroll; height:800px;">
+    <table class="table table-sm">
+    <tr>
+         <th>Time</th>
+         <th>Node IP</th>
+         <th>Log</th>
+    </tr>
+        {% for summ in summ_log.all reversed %}
+    <tr>
+    <td>{{ summ.timestamp }}</td>
+    <td>{{ summ.ip }}</td>
+    <td>{{ summ.log }}</td>
+    </tr>
+        {% endfor %}
+    </table>
+
+{% endblock statistics %}
+</body>
+</html>
