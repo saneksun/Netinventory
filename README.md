@@ -5,6 +5,7 @@ Supported platforms:
 - Juniper 
 - Cisco (IOS, IOS-XR) 
 
+# Getting Started
 
 Prerequisites: 
 - PostgreSQL 
