@@ -35,10 +35,6 @@ urlpatterns = [
     path("stats/", netinventory_views.stats, name="stats"),
     path("about/", netinventory_views.about, name="about"),
     path("logout/", netinventory_views.logout_view, name="logout"),
-    # TODO add page Settings -> schedule scan test
-    # TODO add 403.html
-    #  edit 500.html page - get all info
-         ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+            ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-# handler404 = netinventory_views.handler404
 handler500 = netinventory_views.server_error
