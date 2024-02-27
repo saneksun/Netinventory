@@ -223,39 +223,18 @@ def test(id):
             conn.close_session()
             result.append("NETCONF - OK")
 
-#############################################
-  #TODO move to getinventory.py
-            print(jxmlease.parse(tconf)['data']['host-names']['host-name'])
-            print(jxmlease.parse(tconf)['data']['snmp']['system']['location'])
-            temp=jxmlease.parse(tresult)
-            for cards in temp['data']['platform-inventory']['racks']['rack']['slots']['slot']:
-            #    print(cards['cards']['card']['attributes'])
-                if 'modules' in cards['cards']['card']:
-  #                  print(cards['cards']['card']['modules'])
-                    for module in cards['cards']['card']['modules']['module']:
-                  #      print(module)
-                        if type(module) is jxmlease.dictnode.XMLDictNode:
-                            if 'attributes' in module['hw-components']['hw-component']:
-                                print(module['hw-components']['hw-component']['attributes']['basic-info'])
-############################################
-
-
         except SSHError as e:
             result.append("NETCONF test - Failed")
             ScanLog.objects.create(ip=ip,
                                    log="Error: NETCONF test - Failed {}".format(e))
     elif vendor == 'Cisco IOS-XE':
         try:
-            print('!!!!!!!!!!!!!!!!!!')
-            print(username, passwd)
             conn = node.connect(host=ip, port=22, username=username, password=passwd, timeout=10,
                                 device_params={'name':'iosxe'},
                                 hostkey_verify=False,
                                 allow_agent=False)
-            print('---------------------')
-            print(conn)
+
             tconf = conn.get_config(source='running').data_xml  # it works (returns running config) !!!
-            print(tconf)
 
 
          #   inventory_filter = '''

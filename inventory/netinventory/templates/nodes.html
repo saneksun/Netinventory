@@ -35,6 +35,7 @@
 <div style="width:100%; margin-left:10px">
     <table class="table table-hover">
     <tr>
+        <th width=300px>Hostname</th>
         <th width=300px>IP</th>
         <th width=300px>Last scan</th>
         <th width=300px> </th>
@@ -42,6 +43,7 @@
     </tr>
         {% for s in scan|dictsort:"ip" %}
     <tr>
+    <td>{{ s.hostname }}</td>
     <td>{{ s.ip }}</td>
     <td><i>{{ s.lastscan }}</i></td>
     <td>

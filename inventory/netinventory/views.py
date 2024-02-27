@@ -135,6 +135,10 @@ def allnodes(request):
             scan_node['id'] = scanid['id']
             if scanid['id'] == tid:      # if node was just tested - add test results
                 scan_node['tresult'] = tresult
+        # get hostname
+        if Inventory.objects.filter(ip=scan_node['ip']).values('hostname').exists():
+            scan_node['hostname'] = Inventory.objects.filter(ip=scan_node['ip']).values('hostname').first()['hostname']
+
         if Inventory.objects.filter(ip=ip['ip']).exists():
             for lastscan in Inventory.objects.filter(ip=scan_node['ip']).values('timestamp').distinct('timestamp'):
                 scan_node['lastscan'] = lastscan['timestamp']
@@ -245,7 +249,6 @@ def stats(request):
     summ=reports.glbreport()
     mcount = Inventory.objects.all().values('description').annotate(total=Count('description')).order_by()
     vcount = Inventory.objects.all().values('vendor').annotate(total=Count('vendor')).order_by()
-    print (vcount)
     labels=[]
     data=[]
     vendor=[]

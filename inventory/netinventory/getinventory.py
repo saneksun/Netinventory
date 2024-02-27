@@ -112,16 +112,20 @@ def sys_hardware(ips):
        #   GET HOSTNAME:
             rpc = conn.get_software_information().data_xml
             host=jxmlease.parse(rpc)
+            print (host)
             conn.close_session()
 
             if 'multi-routing-engine-results' in host['rpc-reply']:
                 for h in host['rpc-reply']['multi-routing-engine-results']['multi-routing-engine-item']:
                     if h['software-information']['host-name']:
                         hostname=h['software-information']['host-name']
+                        osversion = h['software-information']['junos-version']
+                        print(osversion)
                         break
             else:
                 hostname=(host['rpc-reply']['software-information']['host-name'])
-
+                osversion=host['rpc-reply']['software-information']['junos-version']
+                print(osversion)
 
 ################
             vendor = 'Juniper Network'
@@ -132,7 +136,7 @@ def sys_hardware(ips):
                 dev.open()
 
          #       hostname = str(dev.facts['hostname'])
-        # get inventory information
+        # get inventory information  #TODO: this info is not using (replace with conn = node.connect from above)
                 rpc = dev.rpc.get_chassis_inventory()
                 rpc_xml = etree.tostring(rpc, pretty_print=True, encoding='unicode')
                 dev.close()
@@ -270,11 +274,12 @@ def sys_hardware(ips):
                                '''
                 tresult = conn.get(filter=('subtree', inventory_filter)).data_xml
                 conn.close_session()
-
+                print(tresult)
                 location=jxmlease.parse(tconf)['data']['snmp']['system']['location']
                 site = str(re.findall(r'^[^,]*,[^,]*', location)[0])
                 hostname = jxmlease.parse(tconf)['data']['host-names']['host-name']
                 temp = jxmlease.parse(tresult)
+                print(temp)
                 for cards in temp['data']['platform-inventory']['racks']['rack']['slots']['slot']:
                     if 'modules' in cards['cards']['card']:
                         for module in cards['cards']['card']['modules']['module']:

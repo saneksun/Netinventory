@@ -26,9 +26,11 @@ class Inventory(models.Model):
     vendor = models.TextField()
     part_number = models.TextField()
     serial_number = models.TextField(unique=True)
+  #  osversion = models.TextField()
     site = models.TextField()  #TODO change its name to location
+  #  notes = models.TextField()
     timestamp = models.DateTimeField(auto_now=True) # TODO change to creation
-
+    # TODO add custom node field -> to add/edit notes
 # For scan logging
 class ScanLog(models.Model):
     ip = models.GenericIPAddressField()
