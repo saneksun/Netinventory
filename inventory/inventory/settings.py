@@ -91,8 +91,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'netinv',
         'USER': 'netinv',
-        'PASSWORD': '12qwaszx',
-        'HOST': '10.128.32.112',
+        'PASSWORD': 'USER_PSWD',
+        'HOST': 'DB_host_IP',
         'PORT': '5432',
     }
 }
