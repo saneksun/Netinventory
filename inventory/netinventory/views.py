@@ -14,12 +14,6 @@ from django.http import HttpResponseServerError
 from django.template import loader
 from django.template.exceptions import TemplateDoesNotExist
 
-# !!! TODO warehouse ---> all revoked hw placed to warehouse (same location but + warehouse = 'yes' field to sort) !!!
-# TODO location!!! change site -> location
-# TODO user permissions - done for node delete!!!
-# TODO what if the list of hw url will be too long - wrap it to the next column or do collapse list?
-## collapse example:  https://getbootstrap.com/docs/5.1/components/collapse/
-
 def home(request):
 
     result=[]
@@ -65,15 +59,6 @@ def home(request):
         # set per-model search result to cache to use it for csv download.
         cache.set('report_summ', summ)
 
-    # view if a hostname was selected (via hostname url):
- #   elif 'hostname' in request.session:
- #       hostname = request.session['hostname']
- #       summ = Inventory.objects.filter(hostname=hostname).values().order_by('-hostname')
- #       count = Inventory.objects.filter(hostname=hostname).values('description').annotate( \
- #           total=Count('description')).order_by()
- #       del request.session['hostname']
-        # set per-model search result to cache to use it for csv download.
- #       cache.set('report_summ', summ)
 
    # general view and count for all inventory items:
     else:
@@ -196,10 +181,6 @@ def NodeScan(request, id):
     return redirect(allnodes)
 
 def modules(request, description):
-    # TODO perform search for HW description by site if site was selected via form - how to send +1 argument via url?
-    #   site variable must be saved in session['site']
-    #   example:
-    #   path('virtual-chassis/<int:pk>/journal/', ObjectJournalView.as_view(), name='virtualchassis_journal', kwargs={'model': VirtualChassis}),
  # provides search by selected appropriate urls on main page
     request.session['description'] = description
     return redirect(home)
