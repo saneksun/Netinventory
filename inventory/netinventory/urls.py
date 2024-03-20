@@ -21,8 +21,6 @@ from django.conf import settings
 
 urlpatterns = [
     path("", netinventory_views.home, name="home"),
- #   path("<slug:description>", netinventory_views.modules, name="module_filter"),
- #   re_path(r"^/(?P<description>[-a-zA-Z0-9_/]+)", netinventory_views.modules, name="module_filter"),
     re_path(r"^/(?P<description>[-a-zA-Z0-9_/]+)", netinventory_views.modules, name="module_filter"),
     path("nodes/", netinventory_views.allnodes, name="nodes"),
     path("report/", netinventory_views.report, name="report"),
