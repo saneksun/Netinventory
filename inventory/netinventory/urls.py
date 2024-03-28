@@ -22,6 +22,7 @@ from django.conf import settings
 urlpatterns = [
     path("", netinventory_views.home, name="home"),
     re_path(r"^/(?P<description>[-a-zA-Z0-9_/]+)", netinventory_views.modules, name="module_filter"),
+    re_path(r"^hostname/(?P<hostname>[-a-zA-Z0-9_/]+)", netinventory_views.nodesfilter, name='nodes_filter'),
     path("nodes/", netinventory_views.allnodes, name="nodes"),
     path("report/", netinventory_views.report, name="report"),
     path("delete/<int:id>/", netinventory_views.NodeDelete, name="delete"),
