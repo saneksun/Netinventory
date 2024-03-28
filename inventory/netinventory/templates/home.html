@@ -63,7 +63,7 @@
     </tr>
         {% for summ in summ.all reversed %}
     <tr>
-    <td>{{ summ.hostname }}</td>
+    <td><a href="hostname/{% url 'nodes_filter' summ.hostname %}">{{ summ.hostname }}</a></td>
     <td>{{ summ.ip }}</td>
     <td>{{ summ.vendor }}</td>
     <td>{{ summ.description }}</td>
