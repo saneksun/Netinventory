@@ -114,7 +114,7 @@ def sys_hardware(ips):
             host=jxmlease.parse(rpc)
             print (host)
             conn.close_session()
-
+        #   GET SOFTWARE VERSION:
             if 'multi-routing-engine-results' in host['rpc-reply']:
                 for h in host['rpc-reply']['multi-routing-engine-results']['multi-routing-engine-item']:
                     if h['software-information']['host-name']:

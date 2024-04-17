@@ -26,7 +26,7 @@
         <table>
             <tr><td><b>Total count:</b></td><td><b>{{ tcount }}</b></td></tr>
             {% for num in count %}
-            <tr><td>{{ num.description }}:</td><td><a href="{% url 'module_filter' num.description %}">{{ num.total }}</a></td></tr>
+            <tr><td>{{ num.description }}:</td><td><a href="description/{% url 'module_filter' num.description %}">{{ num.total }}</a></td></tr>
             {% endfor %}
         <td>
             </table>
@@ -63,7 +63,7 @@
     </tr>
         {% for summ in summ.all reversed %}
     <tr>
-    <td>{{ summ.hostname }}</td>
+    <td><a href="hostname/{% url 'nodes_filter' summ.hostname %}">{{ summ.hostname }}</a></td>
     <td>{{ summ.ip }}</td>
     <td>{{ summ.vendor }}</td>
     <td>{{ summ.description }}</td>

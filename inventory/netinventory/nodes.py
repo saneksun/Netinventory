@@ -22,6 +22,7 @@ def valid_ip(address):
         return False
 
 def inv_log(ip, action):
+    # TODO what if 'site' wasn't got during the scan ??? TEST IT
     user=cache.get('_cached_user')
     if Inventory.objects.filter(ip=ip).exists():
         hostname = Inventory.objects.filter(ip=ip).values('hostname').distinct('hostname')
@@ -149,8 +150,13 @@ def test(id):
     try:
         vars=manager.get(ip, *oids)
         for var in vars:
+    ## 	OCTET_STRING: b'Cisco IOS XR Software (IOS-XRv 9000), Version 6.3.3\r\nCopyright (c) 2013-2017 by Cisco Systems, Inc.'
+    ##  OCTET_STRING: b'Cisco IOS Software, IOS-XE Software, Catalyst L3 Switch Software (CAT3K_CAA-UNIVERSALK9-M), Version 03.06.04.E RELEASE SOFTWARE (fc2)\r\nTechnical Support: http://www.cisco.com/techsupport\r\nCopyright (c) 1986-2016 by Cisco Systems, Inc.\r\nCompiled Sat 13-Feb'
+
+  #          t=str(var).split(' ', 2)[2].split(' ')[0][2:]
             vendor=str(var).split(' ', 2)[2].split(' ')[0][1:].replace("'","")
             if vendor == 'Cisco':
+       #         version = str(var).split(' ', 2)[2].split(' ')[2]
                 version=str(var).split(' ', 2)[2][1:].split(' ')
                 if 'XR' in version:
                     vendor = 'Cisco IOS-XR'
@@ -158,7 +164,7 @@ def test(id):
                     vendor = 'Cisco IOS-XE'
         result.append("SNMP - OK")
 
-    except NoSuchName as n: 
+    except NoSuchName as n: #TODO do I need it ???
         out = ("SNMP test - Failed (NoSuchName})")
         ScanLog.objects.create(ip=ip,
                                log="SNMP test - Failed (Timeout)")
@@ -228,7 +234,14 @@ def test(id):
                                 hostkey_verify=False,
                                 allow_agent=False)
 
-            tconf = conn.get_config(source='running').data_xml 
+            tconf = conn.get_config(source='running').data_xml  # it works (returns running config) !!!
+
+
+         #   inventory_filter = '''
+         #                      <platform-inventory xmlns="http://cisco.com/ns/yang/Cisco-IOS-XE-device-hardware-oper"/>
+         #                             '''
+         #   tresult = conn.get(filter=('subtree', inventory_filter)).data_xml
+         #   print(tresult)
             conn.close_session()
             result.append("NETCONF - OK")
 

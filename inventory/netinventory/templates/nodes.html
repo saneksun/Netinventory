@@ -43,7 +43,11 @@
     </tr>
         {% for s in scan|dictsort:"ip" %}
     <tr>
-    <td>{{ s.hostname }}</td>
+        {% if s.hostname %}
+        <td><a href="details/{% url 'node_details' s.hostname %}">{{ s.hostname }}</a></td>
+        {% else %}
+        <td>{{ s.hostname }}</td>
+        {% endif %}
     <td>{{ s.ip }}</td>
     <td><i>{{ s.lastscan }}</i></td>
     <td>

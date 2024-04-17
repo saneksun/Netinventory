@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.urls import path, include, re_path
 from netinventory import views as netinventory_views
 from django.conf.urls.static import static
@@ -21,7 +20,9 @@ from django.conf import settings
 
 urlpatterns = [
     path("", netinventory_views.home, name="home"),
-    re_path(r"^/(?P<description>[-a-zA-Z0-9_/]+)", netinventory_views.modules, name="module_filter"),
+    re_path(r"^description/(?P<description>[-a-zA-Z0-9_/]+)", netinventory_views.modules, name="module_filter"),
+    re_path(r"^hostname/(?P<hostname>[-a-zA-Z0-9_/]+)", netinventory_views.nodesfilter, name='nodes_filter'),
+    re_path(r"^nodes/details/(?P<hostname>[-a-zA-Z0-9_/]+)", netinventory_views.nodedetails, name='node_details'),
     path("nodes/", netinventory_views.allnodes, name="nodes"),
     path("report/", netinventory_views.report, name="report"),
     path("delete/<int:id>/", netinventory_views.NodeDelete, name="delete"),

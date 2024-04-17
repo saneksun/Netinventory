@@ -6,7 +6,7 @@ setup(
     packages=['inventory', 'inventory.inventory', 'inventory.netinventory', 'inventory.netinventory.migrations'],
     url='',
     license='',
-    author='saneksun',
+    author='alex.chumichev',
     author_email='',
     description=''
 )
