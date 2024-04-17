@@ -9,7 +9,7 @@ The collected inventory can be saved as csv report.
 ## Supported hardware:
 - Juniper JunOS
 - Cisco IOS-XR
-- 
+  
 ## User permissions
 
 The following permissions are available in NetInventory and can be used via Admin panel (for superuser):
@@ -20,3 +20,4 @@ The following permissions are available in NetInventory and can be used via Admi
 ## Prerequisites
 - Django
 - PostgreSQL
+
