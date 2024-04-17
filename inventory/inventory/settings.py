@@ -90,9 +90,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'netinv',
-        'USER': 'netinv',
-        'PASSWORD': '12qwaszx',
-        'HOST': '10.128.32.112',
+        'USER': 'DB_USER',
+        'PASSWORD': 'DB_PASSWORD',
+        'HOST': 'DB_HOST_IP',
         'PORT': '5432',
     }
 }
