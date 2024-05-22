@@ -7,8 +7,8 @@ NetInventory is a tool that is scanning network devices in order to collect hard
 The collected inventory can be saved as csv report.
 
 ## Supported platforms:
-- Juniper JunOS
-- Cisco IOS-XR
+- Juniper JunOS (SRX, vSRX, EX)
+- Cisco IOS-XR (ASR 9k)
   
 ## User permissions
 
